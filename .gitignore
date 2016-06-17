@@ -3,3 +3,4 @@
 /.bundle
 /.idea
 /*.iml
+/Gemfile.lock
