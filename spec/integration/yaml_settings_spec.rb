@@ -287,4 +287,26 @@ describe Puppet::Type.type(:yaml_settings) do
     end
   end
 
+  describe 'with symbols in the values' do
+    include UsesTempFiles
+
+    let :resource_hash do
+      {
+          title: 'foo',
+          name: full_path_for('out.yaml'),
+          values: {
+              ":'a'" => {
+                  'b' => [Puppet::Pops::Types::TypeFactory.enum('c'), 'd']
+              }
+          },
+      }
+    end
+
+    it 'writes a new file whose content matches' do
+      skip 'Puppet version too old' unless defined?(Puppet::Pops::Types::TypeFactory)
+
+      type_instance.refresh
+      expect(result_hash).to eq({:a => { 'b' => [:c, 'd'] } })
+    end
+  end
 end

@@ -101,6 +101,15 @@ Puppet::Type.newtype(:yaml_settings) do
       res
     end
 
+    def self.convert_value(v)
+      case v
+      when Puppet::Pops::Types::PEnumType then v.values.first.to_sym
+      when Array then v.map(&method(:convert_value))
+      when Hash then Hash[v.map { |k, inner_v| [convert_value(k), convert_value(inner_v)] }]
+      else v
+      end
+    end
+
     # override so not to call munge/validate on each value array value individually if array
     def should=(values)
       @shouldorig = values
@@ -120,10 +129,12 @@ Puppet::Type.newtype(:yaml_settings) do
     end
 
     munge do |value|
-      value.each_with_object({}) do |(k, v), memo|
+      res = value.each_with_object({}) do |(k, v), memo|
         key_array = self.class.keys(k)
         memo[key_array] = v
       end
+
+      defined?(Puppet::Pops::Types::PEnumType) ? self.class.convert_value(res) : res
     end
 
     def retrieve

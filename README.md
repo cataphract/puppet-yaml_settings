@@ -69,9 +69,10 @@ Will result in:
         yyy: zzz
 ```
 
-Beware that Puppet 4 behaves differently with respect to number literals. While
-Puppet 3 converts these to strings, Puppet 4 will not. So in Puppet 3, this
-example:
+The ugly `!rby/sym` and indentation of the first member doesn't happen in Puppet
+4, as it uses a different YAML library. Beware that Puppet 4 behaves differently
+with respect to number literals. While Puppet 3 converts these to strings,
+Puppet 4 will not. So in Puppet 3, this example:
 
 	yaml_settings { '/tmp/foo.yaml':
 		values => { 'a' => 1 }
@@ -95,6 +96,24 @@ Because the Puppet 4 behavior makes more sense (notice that other types like
 booleans and the `undef` symbol are also **not** converted under Puppet 3), this
 module doesn't attempt to have Puppet 4 behave like Puppet 3 by converting the
 numbers to strings.
+
+In Puppet 4 or in versions of Puppet 3 with the future parser, there is also a
+(rather hacky) way to specify symbols in the values, this is done by abusing the
+`Enum` type:
+
+	yaml_settings { '/tmp/foo.yml':
+		values => { ":'a'" => { Enum['foo'] => [Enum['bar'], 'bar'] } }
+	}
+
+results in:
+
+```yaml
+---
+:a:
+  :foo:
+  - :bar
+  - bar
+```
 
 ## Creating files with only the keys specified
 
