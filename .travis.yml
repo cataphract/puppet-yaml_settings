@@ -7,7 +7,7 @@ matrix:
     env: PUPPET_VERSION=3.3.0
   - rvm: 1.9.3
     env: PUPPET_VERSION=3.8.7
-  - rvm: jruby-1.7.20.1 # puppetserver
+  - rvm: jruby-1.7.25
     env: PUPPET_VERSION=4.5.1
   - rvm: 2.1.8
     env: PUPPET_VERSION=4.5.1
