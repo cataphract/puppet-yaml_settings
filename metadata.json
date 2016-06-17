@@ -1,0 +1,17 @@
+{
+  "name": "cataphract-yaml_settings",
+  "version": "0.1.0",
+  "author": "Gustavo Lopes",
+  "summary": "Manipulate existing or new YAML files.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/cataphract/puppet-yaml_settings",
+  "project_page": "https://github.com/cataphract/puppet-yaml_settings",
+  "issues_url": "https://github.com/cataphract/puppet-yaml_settings/issues",
+  "dependencies": [],
+  "requirements": [
+    { "name": "puppet", "version_requirement": ">= 3.3.0 < 5.0.0" },
+    { "name": "pe", "version_requirement": ">= 3.3.0" }
+  ],
+  "data_provider": null
+}
+

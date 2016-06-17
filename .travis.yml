@@ -1,0 +1,17 @@
+sudo: false
+language: ruby
+bundler_args: --without development
+matrix:
+  include:
+  - rvm: 1.9.3
+    env: PUPPET_VERSION=3.3.0
+  - rvm: 1.9.3
+    env: PUPPET_VERSION=3.8.7
+  - rvm: jruby-1.7.20.1 # puppetserver
+    env: PUPPET_VERSION=4.5.1
+  - rvm: 2.1.8
+    env: PUPPET_VERSION=4.5.1
+
+script:
+  - bundle exec rubocop
+  - bundle exec rake test

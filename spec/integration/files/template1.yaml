@@ -1,0 +1,4 @@
+---
+foo:
+  string_key: string_value
+  :symbol_key: 'The value'
