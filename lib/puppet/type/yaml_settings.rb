@@ -112,8 +112,11 @@ Puppet::Type.newtype(:yaml_settings) do
     end
 
     def self.convert_value(v)
+      return v.values.first.to_sym if
+        defined?(Puppet::Pops::Types::PEnumType) && v.instance_of?(Puppet::Pops::Types::PEnumType)
+
       case v
-      when Puppet::Pops::Types::PEnumType then v.values.first.to_sym
+      when :undef then nil
       when Array then v.map(&method(:convert_value))
       when Hash then Hash[v.map { |k, inner_v| [convert_value(k), convert_value(inner_v)] }]
       else v
@@ -144,7 +147,7 @@ Puppet::Type.newtype(:yaml_settings) do
         memo[key_array] = v
       end
 
-      defined?(Puppet::Pops::Types::PEnumType) ? self.class.convert_value(res) : res
+      self.class.convert_value(res)
     end
 
     def retrieve

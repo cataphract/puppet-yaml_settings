@@ -309,4 +309,23 @@ describe Puppet::Type.type(:yaml_settings) do
       expect(result_hash).to eq({:a => { 'b' => [:c, 'd'] } })
     end
   end
+
+  describe 'with undef values' do
+    include UsesTempFiles
+
+    let :resource_hash do
+      {
+          title: 'foo',
+          name: full_path_for('out.yaml'),
+          values: {
+              ":'a'" => :undef,
+          },
+      }
+    end
+
+    it 'writes a new file whose content matches' do
+      type_instance.refresh
+      expect(result_hash).to eq({:a => nil })
+    end
+  end
 end
