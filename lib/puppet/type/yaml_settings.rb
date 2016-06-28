@@ -13,7 +13,13 @@ Puppet::Type.newtype(:yaml_settings) do
 
   # parameters
 
-  newparam :target, namevar: true do
+  newparam :name, namevar: true do
+    desc <<-'EOT'
+      An arbitrary name for the resource. It will be the default for 'target'.
+    EOT
+  end
+
+  newparam :target do
     isrequired
     desc <<-'EOT'
       The path to the properties file to manage. Either this should file should
@@ -21,6 +27,10 @@ Puppet::Type.newtype(:yaml_settings) do
     EOT
 
     class_eval(&file_param_validation)
+
+    def default
+      @resource[:name]
+    end
   end
 
   newparam :source do
