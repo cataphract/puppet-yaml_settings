@@ -57,6 +57,13 @@ Puppet::Type.newtype(:yaml_settings) do
     newvalues :true, :false
   end
 
+  newparam :purge, boolean: true do
+    desc 'Whether the current settings should be loaded'
+
+    defaultto :false
+    newvalues :true, :false
+  end
+
   newparam :user do
     desc 'The user with which to make the changes'
   end

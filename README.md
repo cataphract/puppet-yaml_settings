@@ -153,6 +153,7 @@ This is the full list of parameters:
 	  source           => '/tmp/source.yaml',
 	  allow_new_values => true,
 	  allow_new_file   => true,
+	  purge            => false, # discard current file content
 	  user             => 'root', # user used to read/write file,
 								  # doesn't change ownership like 'file'!
 	}

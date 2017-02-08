@@ -81,6 +81,7 @@ Puppet::Type.type(:yaml_settings).provide(:yaml_settings_provider) do
   end
 
   def load(file_path)
+    return {} if resource.purge?
     with_chosen_user do
       res = YAML.load_file file_path
       case res
